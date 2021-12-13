@@ -1,0 +1,62 @@
+body {
+    background-color: rgb(255, 249, 241);
+    user-select: none;
+}
+
+.loading {
+    display: none;
+}
+
+#main {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#disp1 {
+    height: 30px;
+    font-size: 30px;
+    margin-top: 18px;
+}
+
+#disp2 {
+    height: 40px;
+    font-size: 20px;
+    margin-top: 22px;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100px;
+    margin-bottom: 2px;
+}
+
+.btnBox {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    display: block;
+    width: 100px;
+    height: 60px;
+    font-size: 40px;
+}
+
+.nextBtn {
+    width: 200px;
+}
+
+.optionBtn>button {
+    margin: 38px auto 22px auto;
+    font-size: 18px;
+    padding: 0;
+}
+
+#reloadBtn {
+    width: 300px;
+    height: 30px;
+    line-height: 20px;
+    font-size: 20px;
+    padding: 0;
+}
