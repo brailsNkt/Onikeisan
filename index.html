@@ -44,7 +44,7 @@
                 <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
                 <button class="zeroBtn" v-on:click="f(0)">0</button>
             </div>
-            <span v-show="state===0">※このページでは音が出ます※</span>
+            <span>※このページでは音が出ます※</span>
         </div>
         <p v-if="false">
             {{message}}<br>
@@ -181,7 +181,7 @@
                         this.state++
                         if (i === this.kotaeList[this.state - this.level - 1]) {
                             this.result[0]++
-                            this.message = '◯'
+                            this.message = ''
                             this.music_seikai.pause()
                             this.music_seikai.currentTime = 0
                             this.music_seikai.play()
@@ -191,7 +191,7 @@
                             }
                         } else {
                             this.result[1]++
-                            this.message = '✕'
+                            this.message = ''
                             this.music_fuseikai.pause()
                             this.music_fuseikai.currentTime = 0
                             this.music_fuseikai.play()
