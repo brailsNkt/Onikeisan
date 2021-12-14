@@ -44,8 +44,8 @@
                 <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
                 <button class="zeroBtn" v-on:click="f(0)">0</button>
             </div>
-            
             <span v-show="state===0">※このページでは音が出ます※</span>
+            <button id="reloadBtn" v-show="state===0" v-on:click="location.reload(1)">※</button>
         </div>
         <p v-if="false">
             {{message}}<br>
