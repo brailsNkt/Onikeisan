@@ -1,6 +1,11 @@
+p {
+    margin: 0;
+}
+
 body {
     background-color: rgb(255, 249, 241);
     user-select: none;
+    margin-top: 60px;
 }
 
 .loading {
@@ -15,27 +20,41 @@ body {
 
 #disp0 {
     width: 180px;
-    height: 30px;
+    height: 47px;
     margin: 22px auto;
+    background-color: aquamarine;
+    opacity: .5;
 }
 
 #disp0>p {
     font-size: 30px;
     font-family: 'Yuji Syuku', serif;
     border-bottom: 2px solid #000;
+    margin: 0;
 }
 
 #disp1 {
     height: 30px;
+    line-height: 34px;
     font-size: 30px;
-    margin-top: 10px;
+    background-color: rgb(36, 99, 78);
+    opacity: .5;
 }
 
+
 #disp2 {
-    height: 40px;
+    height: 30px;
     font-size: 20px;
-    margin-top: 22px;
-    margin-bottom: 20px;
+    /* margin-top: 22px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: aquamarine;
+    opacity: .5;
+}
+
+#disp3 {
+    height: 30px;
+    font-size: 20px;
 }
 
 input {
@@ -46,17 +65,29 @@ input {
 .btnBox {
     display: flex;
     flex-wrap: wrap;
+    width: 180px;
+    margin: 0 auto;
 }
 
 button {
     display: block;
-    width: 100px;
-    height: 60px;
-    font-size: 40px;
+    width: 60px;
+    height: 50px;
+    font-size: 38px;
+}
+
+#reset {
+    font-size: 30px;
+    line-height: 49px;
 }
 
 .nextBtn {
-    width: 200px;
+    font-size: 32px;
+    line-height: 49px;
+}
+
+.zeroBtn {
+    width: 120px;
 }
 
 .optionBtn>button {
@@ -66,9 +97,10 @@ button {
 }
 
 #reloadBtn {
-    width: 300px;
+    width: 210px;
     height: 30px;
     line-height: 20px;
     font-size: 20px;
     padding: 0;
+    margin: 0 auto;
 }

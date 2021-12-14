@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:description" content="脳トレをマネしたやつです。" />
     <title>鬼計算</title>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
@@ -23,25 +24,28 @@
             {{monadaiList[state-1]}}<br>
         </div>
         <div id="disp2">
-            {{message}}
+            <p>{{message}}</p>
+        </div>
+        <div id="disp3">
             <p>{{clRate}}</p>
-            <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
         </div>
-        <div class="btnBox">
-            <button class="numBtn" v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="f(i)">{{i}}</button>
-            <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
-            <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
-            <button class="numBtn" v-on:click="f(0)">0</button>
+        <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
+        <div id="btnCotainer">
+            <div class="btnBox">
+                <button v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="f(i)">{{i}}</button>
+                <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
+                <button class="zeroBtn" v-on:click="f(0)">0</button>
+            </div>
+            <div class="btnBox optionBtn">
+                <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算</button>
+                <button v-show="zhGufWv!=2||state!=0" disabled>加算</button>
+                <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
+                <button v-show="ba>=100||state!=0" disabled>無限</button>
+                <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
+                <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
+            </div>
+            <span v-show="state===0">※このページでは音が出ます※</span>
         </div>
-        <div class="btnBox optionBtn">
-            <button v-on:click="reset">リセット</button>
-            <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
-            <button v-show="ba>=100||state!=0" disabled>無限</button>
-            <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算だけ</button>
-            <button v-show="zhGufWv!=2||state!=0" disabled>加算だけ</button>
-        </div>
-        <span v-show="state===0">※このページでは音が出ます※</span>
-        <button id="reloadBtn" v-show="state===0" v-on:click="location.reload(true)">表示がおかしい時に押すボタン</button>
         <p v-if="false">
             {{message}}<br>
             {{kotaeList}}<br>
@@ -134,7 +138,7 @@
                         this.level = i
                         //  this.kotaeList = Array(i).fill().map(v => Math.floor(Math.random() * 10))
                         for (fi = 0; fi < i * this.ba; fi++) {
-                            if(this.ba >= 100)this.titleFlag = 1
+                            if (this.ba >= 100) this.titleFlag = 1
                             var ary = ['+', '-'];
                             var x = Math.floor(Math.random() * 10)
                             var y = Math.floor(Math.random() * 10)
