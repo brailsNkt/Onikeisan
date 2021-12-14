@@ -6,18 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:description" content="脳トレをマネしたやつです。" />
     <title>鬼計算</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="main" class="loading">
+        <div id="disp0">
+            <p v-show="!titleFlag">鬼計算</p>
+            <p v-show="ba>=100&&level!=0">無限レベル{{level}}</p>
+        </div>
         <div id="disp1">
             {{monadaiList[state-1]}}<br>
         </div>
         <div id="disp2">
-            {{message}}<br>
-            {{clRate}}
+            {{message}}
+            <p>{{clRate}}</p>
             <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
         </div>
         <div class="btnBox">
@@ -66,7 +73,8 @@
                 inp: '',
                 placeHolder: '',
                 zhGufWv: 2,
-                clRate: ''
+                clRate: '',
+                titleFlag: 0,
             },
             methods: {
                 inpEv: function (num) {
@@ -118,6 +126,7 @@
                     this.music_fuseikai.pause()
                     this.music_inf.pause()
                     this.music_inf.currentTime = 0
+                    this.titleFlag = 0
                 },
                 f: function (i) {
                     if (this.state == 0) {
@@ -125,6 +134,7 @@
                         this.level = i
                         //  this.kotaeList = Array(i).fill().map(v => Math.floor(Math.random() * 10))
                         for (fi = 0; fi < i * this.ba; fi++) {
+                            if(this.ba >= 100)this.titleFlag = 1
                             var ary = ['+', '-'];
                             var x = Math.floor(Math.random() * 10)
                             var y = Math.floor(Math.random() * 10)
@@ -194,7 +204,7 @@
                     }
                 }
             },
-            created: function(){
+            created: function () {
                 this.music_inf.loop = true
             }
         })
