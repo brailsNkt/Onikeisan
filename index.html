@@ -27,7 +27,6 @@
             <p>{{message}}</p>
         </div>
         <div id="disp3">
-            <p>{{clRate}}</p>
         </div>
         <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
         <div class="btnBox optionBtn">
@@ -77,7 +76,6 @@
                 inp: '',
                 placeHolder: '',
                 zhGufWv: 2,
-                clRate: '',
                 titleFlag: 0,
             },
             methods: {
@@ -125,7 +123,6 @@
                     this.inp = ''
                     this.placeHolder = ''
                     this.zhGufWv = 2
-                    this.clRate = ''
                     this.music_seikai.pause()
                     this.music_fuseikai.pause()
                     this.music_inf.pause()
@@ -186,7 +183,7 @@
                             this.music_seikai.currentTime = 0
                             this.music_seikai.play()
                             if (this.ba >= 100) {
-                                this.clRate = '正解率' + Math.floor(this.result[0] / this.selected
+                                this.message = '正解率' + Math.floor(this.result[0] / this.selected
                                     .length * 1000) / 10 + '%(' + this.selected.length + '問)'
                             }
                         } else {
@@ -196,7 +193,7 @@
                             this.music_fuseikai.currentTime = 0
                             this.music_fuseikai.play()
                             if (this.ba >= 100) {
-                                this.clRate = '正解率' + Math.floor(this.result[0] / this.selected
+                                this.message = '正解率' + Math.floor(this.result[0] / this.selected
                                     .length * 1000) / 10 + '%(' + this.selected.length + '問)'
                             }
                         }
