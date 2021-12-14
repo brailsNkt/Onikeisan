@@ -30,20 +30,21 @@
             <p>{{clRate}}</p>
         </div>
         <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
+        <div class="btnBox optionBtn">
+            <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算</button>
+            <button v-show="zhGufWv!=2||state!=0" disabled>加算</button>
+            <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
+            <button v-show="ba>=100||state!=0" disabled>無限</button>
+            <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
+            <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
+        </div>
         <div id="btnCotainer">
             <div class="btnBox">
                 <button v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="f(i)">{{i}}</button>
                 <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
                 <button class="zeroBtn" v-on:click="f(0)">0</button>
             </div>
-            <div class="btnBox optionBtn">
-                <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算</button>
-                <button v-show="zhGufWv!=2||state!=0" disabled>加算</button>
-                <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
-                <button v-show="ba>=100||state!=0" disabled>無限</button>
-                <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
-                <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
-            </div>
+            
             <span v-show="state===0">※このページでは音が出ます※</span>
         </div>
         <p v-if="false">
