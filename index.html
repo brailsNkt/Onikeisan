@@ -1,217 +1,219 @@
-<!DOCTYPE html>
-<html lang="ja">
+        </div>
+        <!DOCTYPE html>
+        <html lang="ja">
 
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:description" content="脳トレをマネしたやつです。" />
-    <title>鬼計算</title>
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
-</head>
+        <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta property="og:description" content="脳トレをマネしたやつです。" />
+            <title>鬼計算</title>
+            <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
+            <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
+            <link rel="stylesheet" href="style.css">
+            <link rel="shortcut icon" href="favicon.jpg" type="image/x-icon">
+        </head>
 
-<body>
-    <div id="main" class="loading">
-        <div id="disp0">
-            <p v-show="!titleFlag">鬼計算</p>
-            <p v-show="ba>=100&&level!=0">無限レベル{{level}}</p>
-        </div>
-        <div id="disp1">
-            {{monadaiList[state-1]}}<br>
-        </div>
-        <div id="disp2">
-            <p>{{message}}</p>
-        </div>
-        <div id="disp3">
-        </div>
-        <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
-        <div class="btnBox optionBtn">
-            <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算</button>
-            <button v-show="zhGufWv!=2||state!=0" disabled>加算</button>
-            <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
-            <button v-show="ba>=100||state!=0" disabled>無限</button>
-            <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
-            <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
-        </div>
-        <div id="btnCotainer">
-            <div class="btnBox">
-                <button v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="f(i)">{{i}}</button>
-                <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
-                <button class="zeroBtn" v-on:click="f(0)">0</button>
+        <body>
+            <div id="main" v-cloak>
+                <div id="disp0">
+                    <p v-show="!titleFlag">鬼計算</p>
+                    <p v-show="ba>=100&&level!=0">無限レベル{{level}}</p>
+                </div>
+                <div id="disp1">
+                    {{monadaiList[state-1]}}<br>
+                </div>
+                <div id="disp2">
+                    <p>{{message}}</p>
+                </div>
+                <div id="disp3">
+                </div>
+                <input v-show="false" id="inp" type="text" v-model="inp" v-bind:placeholder="placeHolder">
+                <div class="btnBox optionBtn">
+                    <button v-show="zhGufWv===2&&state===0" v-on:click="zhGufW">加算</button>
+                    <button v-show="zhGufWv!=2||state!=0" disabled>加算</button>
+                    <button v-show="ba<100&&state===0" v-on:click="inf">無限</button>
+                    <button v-show="ba>=100||state!=0" disabled>無限</button>
+                    <button class="nextBtn" v-show="!this.nextBtnFlag" disabled>次へ</button>
+                    <button class="nextBtn" v-show="this.nextBtnFlag" v-on:click="f(10)">次へ</button>
+                </div>
+                <div id="btnCotainer">
+                    <div class="btnBox">
+                        <button v-for="i in [1,2,3,4,5,6,7,8,9]" v-on:click="f(i)">{{i}}</button>
+                        <button id="reset" v-on:click="reset"><i class="fas fa-redo"></i></button>
+                        <button class="zeroBtn" v-on:click="f(0)">0</button>
+                    </div>
+                    <span>※このページでは音が出ます※</span>
+                </div>
+                <p v-if="false">
+                    {{message}}<br>
+                    {{kotaeList}}<br>
+                    {{monadaiList[state-1]}}<br>
+                    {{selected}}<br>
+                    {{state}}<br>
+                    {{level}}<br>
+                    {{result}}
+                </p>
             </div>
-            <span>※このページでは音が出ます※</span>
-        </div>
-        <p v-if="false">
-            {{message}}<br>
-            {{kotaeList}}<br>
-            {{monadaiList[state-1]}}<br>
-            {{selected}}<br>
-            {{state}}<br>
-            {{level}}<br>
-            {{result}}
-        </p>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script>
-        var app = new Vue({
-            el: '#main',
-            data: {
-                music_seikai: new Audio('sound/seikai.mp3'),
-                music_fuseikai: new Audio('sound/fuseikai.mp3'),
-                music_inf: new Audio('sound/Social Documentary04.mp3'),
-                message: 'レベルを選択',
-                level: 0,
-                kotaeList: [],
-                monadaiList: [],
-                selected: [],
-                result: [0, 0],
-                state: 0,
-                nextBtnFlag: 0,
-                endFlag: 0,
-                ba: 4,
-                inp: '',
-                placeHolder: '',
-                zhGufWv: 2,
-                titleFlag: 0,
-            },
-            methods: {
-                inpEv: function (num) {
-                    this.inp = ''
-                    // alert(num.currentTarget.value)
-                    var temp = false
-                    for (i = 0; i <= 9; i++) {
-                        if (Number(num.currentTarget.value) === i) temp = true
-                        if (num.currentTarget.value === '+') temp = true
-                    }
-                    if (temp !== true) return
-                    if (num.currentTarget.value === '+') {
-                        this.f(num.currentTarget.value)
-                    } else {
-                        this.f(Number(num.currentTarget.value))
-                    }
-                    this.placeHolder = '＋で次へ'
-                    if (this.state >= this.level) this.placeHolder = ''
-                    if (this.endFlag === 1) {
-                        this.placeHolder = '＋でリセット'
-                        if (num.currentTarget.value == '+') {
-                            this.reset()
-                        }
-                    }
-                },
-                inf: function () {
-                    this.ba = 4000
-                    this.music_inf.play()
-                },
-                zhGufW: function () {
-                    this.zhGufWv = 1
-                },
-                reset: function () {
-                    this.message = 'レベルを選択'
-                    this.level = 0
-                    this.kotaeList = []
-                    this.monadaiList = []
-                    this.selected = []
-                    this.result = [0, 0]
-                    this.state = 0
-                    this.nextBtnFlag = 0
-                    this.endFlag = 0
-                    this.ba = 4
-                    this.inp = ''
-                    this.placeHolder = ''
-                    this.zhGufWv = 2
-                    this.music_seikai.pause()
-                    this.music_fuseikai.pause()
-                    this.music_inf.pause()
-                    this.music_inf.currentTime = 0
-                    this.titleFlag = 0
-                },
-                f: function (i) {
-                    if (this.state == 0) {
-                        if (i === 0 || i === '+') return
-                        this.level = i
-                        //  this.kotaeList = Array(i).fill().map(v => Math.floor(Math.random() * 10))
-                        for (fi = 0; fi < i * this.ba; fi++) {
-                            if (this.ba >= 100) this.titleFlag = 1
-                            var ary = ['+', '-'];
-                            var x = Math.floor(Math.random() * 10)
-                            var y = Math.floor(Math.random() * 10)
-                            n = Math.floor(Math.random() * this.zhGufWv)
-                            switch (n) {
-                                case 0:
-                                    answer = x + y
-                                    break
-                                case 1:
-                                    answer = x - y
-                                    break
+            <script src="https://unpkg.com/vue@next"></script>
+            <script>
+                const app = Vue.createApp({
+                    data: () => ({
+                        music_seikai: new Audio('sound/seikai.mp3'),
+                        music_fuseikai: new Audio('sound/fuseikai.mp3'),
+                        music_inf: new Audio('sound/Social Documentary04.mp3'),
+                        message: 'レベルを選択',
+                        level: 0,
+                        kotaeList: [],
+                        monadaiList: [],
+                        selected: [],
+                        result: [0, 0],
+                        state: 0,
+                        nextBtnFlag: 0,
+                        endFlag: 0,
+                        ba: 4,
+                        inp: '',
+                        placeHolder: '',
+                        zhGufWv: 2,
+                        titleFlag: 0,
+                    }),
+                    methods: {
+                        inpEv: function (num) {
+                            this.inp = ''
+                            // alert(num.currentTarget.value)
+                            var temp = false
+                            for (i = 0; i <= 9; i++) {
+                                if (Number(num.currentTarget.value) === i) temp = true
+                                if (num.currentTarget.value === '+') temp = true
                             }
-                            if (0 > answer || answer > 9) {
-                                fi--
-                                continue
+                            if (temp !== true) return
+                            if (num.currentTarget.value === '+') {
+                                this.f(num.currentTarget.value)
+                            } else {
+                                this.f(Number(num.currentTarget.value))
                             }
-                            this.kotaeList.push(answer)
-                            this.monadaiList.push(x + ary[n] + y)
-                        }
-                        this.state++
-                        this.message = ''
-                        if (this.level !== 1) {
-                            this.nextBtnFlag = 1
-                            this.message = '「次へ」で続行'
-                        }
-                        this.placeHolder = 'レベル' + i
-                    } else if (this.state < this.level) {
-                        if (i === 10 || i === '+') {
-                            this.state++
-                            if (this.state === this.level) {
-                                this.nextBtnFlag = 0
-                                this.message = this.level - 1 + '問前の答えを入力'
+                            this.placeHolder = '＋で次へ'
+                            if (this.state >= this.level) this.placeHolder = ''
+                            if (this.endFlag === 1) {
+                                this.placeHolder = '＋でリセット'
+                                if (num.currentTarget.value == '+') {
+                                    this.reset()
+                                }
                             }
-                        }
-                    } else if (this.state < this.kotaeList.length + this.level) {
-                        if (i === 10) return
-                        if (i == '+' && this.selected.length >= this.level) this.reset()
-                        if (i == '+') return
-                        this.selected.push(i)
-                        this.state++
-                        if (i === this.kotaeList[this.state - this.level - 1]) {
-                            this.result[0]++
-                            this.message = ''
+                        },
+                        inf: function () {
+                            this.ba = 6000
+                            this.music_inf.play()
+                        },
+                        zhGufW: function () {
+                            this.zhGufWv = 1
+                        },
+                        reset: function () {
+                            this.message = 'レベルを選択'
+                            this.level = 0
+                            this.kotaeList = []
+                            this.monadaiList = []
+                            this.selected = []
+                            this.result = [0, 0]
+                            this.state = 0
+                            this.nextBtnFlag = 0
+                            this.endFlag = 0
+                            this.ba = 4
+                            this.inp = ''
+                            this.placeHolder = ''
+                            this.zhGufWv = 2
                             this.music_seikai.pause()
-                            this.music_seikai.currentTime = 0
-                            this.music_seikai.play()
-                            if (this.ba >= 100) {
-                                this.message = '正解率' + Math.floor(this.result[0] / this.selected
-                                    .length * 1000) / 10 + '%(' + this.selected.length + '問)'
-                            }
-                        } else {
-                            this.result[1]++
-                            this.message = ''
                             this.music_fuseikai.pause()
-                            this.music_fuseikai.currentTime = 0
-                            this.music_fuseikai.play()
-                            if (this.ba >= 100) {
-                                this.message = '正解率' + Math.floor(this.result[0] / this.selected
-                                    .length * 1000) / 10 + '%(' + this.selected.length + '問)'
+                            this.music_inf.pause()
+                            this.music_inf.currentTime = 0
+                            this.titleFlag = 0
+                        },
+                        f: function (i) {
+                            if (this.state == 0) {
+                                if (i === 0 || i === '+') return
+                                this.level = i
+                                //  this.kotaeList = Array(i).fill().map(v => Math.floor(Math.random() * 10))
+                                for (fi = 0; fi < i * this.ba; fi++) {
+                                    if (this.ba >= 100) this.titleFlag = 1
+                                    var ary = ['+', '-'];
+                                    var x = Math.floor(Math.random() * 10)
+                                    var y = Math.floor(Math.random() * 10)
+                                    n = Math.floor(Math.random() * this.zhGufWv)
+                                    switch (n) {
+                                        case 0:
+                                            answer = x + y
+                                            break
+                                        case 1:
+                                            answer = x - y
+                                            break
+                                    }
+                                    if (0 > answer || answer > 9) {
+                                        fi--
+                                        continue
+                                    }
+                                    this.kotaeList.push(answer)
+                                    this.monadaiList.push(x + ary[n] + y)
+                                }
+                                this.state++
+                                this.message = ''
+                                if (this.level !== 1) {
+                                    this.nextBtnFlag = 1
+                                    this.message = '「次へ」で続行'
+                                }
+                                this.placeHolder = 'レベル' + i
+                            } else if (this.state < this.level) {
+                                if (i === 10 || i === '+') {
+                                    this.state++
+                                    if (this.state === this.level) {
+                                        this.nextBtnFlag = 0
+                                        this.message = this.level - 1 + '問前の答えを入力'
+                                    }
+                                }
+                            } else if (this.state < this.kotaeList.length + this.level) {
+                                if (i === 10) return
+                                if (i == '+' && this.selected.length >= this.level) this.reset()
+                                if (i == '+') return
+                                this.selected.push(i)
+                                this.state++
+                                if (i === this.kotaeList[this.state - this.level - 1]) {
+                                    this.result[0]++
+                                    this.message = ''
+                                    this.music_seikai.pause()
+                                    this.music_seikai.currentTime = 0
+                                    this.music_seikai.play()
+                                    if (this.ba >= 100) {
+                                        this.message = '正解率' + Math.floor(this.result[0] / this.selected
+                                            .length * 1000) / 10 + '%(' + this.selected.length + '問)'
+                                    }
+                                } else {
+                                    this.result[1]++
+                                    this.message = ''
+                                    this.music_fuseikai.pause()
+                                    this.music_fuseikai.currentTime = 0
+                                    this.music_fuseikai.play()
+                                    if (this.ba >= 100) {
+                                        this.message = '正解率' + Math.floor(this.result[0] / this.selected
+                                            .length * 1000) / 10 + '%(' + this.selected.length + '問)'
+                                    }
+                                }
+                                if (this.state >= this.kotaeList.length + this.level) {
+                                    this.message = '正解率' + Math.floor(this.result[0] / this.kotaeList
+                                        .length *
+                                        1000) / 10 + '%(' + (this.level * this.ba) + '問)'
+                                    this.endFlag = 1
+                                }
                             }
                         }
-                        if (this.state >= this.kotaeList.length + this.level) {
-                            this.message = '正解率' + Math.floor(this.result[0] / this.kotaeList.length *
-                                1000) / 10 + '%(' + (this.level * this.ba) + '問)'
-                            this.endFlag = 1
-                        }
+                    },
+                    created: function () {
+                        this.music_inf.loop = true
                     }
-                }
-            },
-            created: function () {
-                this.music_inf.loop = true
-            }
-        })
-        document.getElementById('inp').addEventListener('input', app.inpEv)
-        document.getElementById('main').classList.remove('loading')
-    </script>
-</body>
+                })
+                document.getElementById('inp').addEventListener('input', app.inpEv)
+                app.mount('#main')
+            </script>
+        </body>
 
-</html>
+        </html>

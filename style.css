@@ -12,7 +12,7 @@ body {
     margin-top: 60px;
 }
 
-.loading {
+[v-cloak] {
     display: none;
 }
 
