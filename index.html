@@ -17,7 +17,8 @@
         </head>
 
         <body>
-            <div id="main" v-cloak>
+            <div id="main">
+                <div id="m">鬼計算無限レベル123456789</div>
                 <div id="disp0">
                     <p v-show="!titleFlag">鬼計算</p>
                     <p v-show="ba>=100&&level!=0">無限レベル{{level}}</p>
@@ -57,6 +58,7 @@
                     {{result}}
                 </p>
             </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
             <script src="https://unpkg.com/vue@next"></script>
             <script>
                 const app = Vue.createApp({
@@ -212,6 +214,11 @@
                     }
                 })
                 document.getElementById('inp').addEventListener('input', app.inpEv)
+                WebFont.load({
+                    custom: {
+                        families: ['Yuji Syuku']
+                    }
+                })
                 app.mount('#main')
             </script>
         </body>

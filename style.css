@@ -1,15 +1,31 @@
+@font-face {
+    font-family: 'Yuji Syuku', serif;
+    src: url('https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap');
+}
+
 p {
     margin: 0;
 }
 
 html {
     height: 600px;
+    opacity: 0;
+}
+
+html.wf-active {
+    opacity: 1;
 }
 
 body {
     background-color: rgb(255, 249, 241);
     user-select: none;
     margin-top: 60px;
+}
+
+#m {
+    opacity: 1;
+    height: 0;
+    font-family: 'Yuji Syuku', serif;
 }
 
 [v-cloak] {
